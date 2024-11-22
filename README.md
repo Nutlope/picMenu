@@ -28,6 +28,5 @@
 - [ ] Generate additional details (ingredients, origin, calories, taste) then display them in a modal when a user clicks a menu item
 - [ ] Better account for errors if it crashes (or if menu is too big). Also warn users it can take up to 60 seconds
 - [ ] Make the "use our example" link show a lot of custom menus in different languages, maybe in a modal
-- [ ] Iterate on the image prompt to make the images more realistic
 - [ ] Add some tags as well (like spicy, vegetarian, vegan, etc.) to make the UI better
 - [ ] Add filters for those tags to be able to filter by them for food restrictions
