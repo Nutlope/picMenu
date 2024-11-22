@@ -1,7 +1,7 @@
 "use client";
 
 import { useS3Upload } from "next-s3-upload";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Dropzone from "react-dropzone";
 import { PhotoIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Input } from "@/components/ui/input";
@@ -26,11 +26,25 @@ export default function Home() {
   >("initial");
   const [parsedMenu, setParsedMenu] = useState<MenuItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const loadingRef = useRef<HTMLDivElement>(null);
+
+  const scrollToLoading = () => {
+    loadingRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
 
   const handleFileChange = async (file: File) => {
     const objectUrl = URL.createObjectURL(file);
     setStatus("uploading");
     setMenuUrl(objectUrl);
+
+    setIsLoading(true);
+    scrollToLoading();
+
     const { url } = await uploadToS3(file);
     setMenuUrl(url);
     setStatus("parsing");
@@ -46,15 +60,20 @@ export default function Home() {
     console.log({ json });
 
     setStatus("created");
+    setIsLoading(false);
     setParsedMenu(json.menu);
   };
 
   const handleSampleImage = async () => {
     setStatus("parsing");
+    setIsLoading(true);
+    scrollToLoading();
+
     setMenuUrl(italianMenuUrl);
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
     setStatus("created");
+    setIsLoading(false);
     setParsedMenu(italianParsedMenu);
   };
 
@@ -82,7 +101,7 @@ export default function Home() {
         </h1>
       </div>
       <div className="max-w-3xl text-center mx-auto">
-        <p className="mb-8 text-lg text-gray-500 text-balance ">
+        <p className="mb-8 text-lg text-gray-500 text-balance">
           Take a picture of your menu and get pictures of each dish so you can
           better decide what to order.
         </p>
@@ -136,7 +155,7 @@ export default function Home() {
         )}
 
         {menuUrl && (
-          <div className="my-10 mx-auto flex  flex-col items-center">
+          <div className="my-10 mx-auto flex flex-col items-center">
             <Image
               width={1024}
               height={768}
@@ -147,29 +166,32 @@ export default function Home() {
           </div>
         )}
 
-        {status === "parsing" && (
-          <div className="mt-10 flex flex-col items-center">
-            <div className="flex items-center space-x-4 mb-6">
-              <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-              <p className="text-lg text-gray-600">
-                Creating your visual menu...
-              </p>
-            </div>
-            <div className="w-full max-w-2xl space-y-4">
-              <div className="h-8 bg-gray-200 rounded-lg animate-pulse" />
-              <div className="grid grid-cols-3 gap-4">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="space-y-2">
-                    <div className="h-32 bg-gray-200 rounded-lg animate-pulse" />
-                    <div className="h-4 bg-gray-200 rounded animate-pulse" />
-                    <div className="h-4 w-2/3 bg-gray-200 rounded animate-pulse" />
-                  </div>
-                ))}
+        <div ref={loadingRef}>
+          {isLoading && (
+            <div className="mt-10 flex flex-col items-center">
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
+                <p className="text-lg text-gray-600">
+                  Creating your visual menu...
+                </p>
+              </div>
+              <div className="w-full max-w-2xl space-y-4">
+                <div className="h-8 bg-gray-200 rounded-lg animate-pulse" />
+                <div className="grid grid-cols-3 gap-4">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="space-y-2">
+                      <div className="h-32 bg-gray-200 rounded-lg animate-pulse" />
+                      <div className="h-4 bg-gray-200 rounded animate-pulse" />
+                      <div className="h-4 w-2/3 bg-gray-200 rounded animate-pulse" />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+
       {parsedMenu.length > 0 && (
         <div className="mt-10">
           <h2 className="text-4xl font-bold mb-5">
