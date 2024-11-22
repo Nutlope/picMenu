@@ -94,7 +94,7 @@ export async function POST(request: Request) {
     console.log("processing image for:", item.name);
     const response = await together.images.create({
       prompt: `A picture of food for a menu, hyper realistic, highly detailed, ${item.name}, ${item.description}.`,
-      model: "black-forest-labs/FLUX.1-schnell",
+      model: "black-forest-labs/FLUX.1-dev", // Updated model
       width: 1024,
       height: 768,
       steps: 5,
