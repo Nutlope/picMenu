@@ -92,15 +92,16 @@ export async function POST(request: Request) {
   // Create an array of promises for parallel image generation
   const imagePromises = menuItemsJSON.map(async (item: any) => {
     console.log("processing image for:", item.name);
-    const response = await together.images.create({
-      prompt: `A picture of food for a menu, hyper realistic, highly detailed, ${item.name}, ${item.description}.`,
-      model: "black-forest-labs/FLUX.1-schnell",
-      width: 1024,
-      height: 768,
-      steps: 5,
-      // @ts-expect-error - this is not typed in the API
-      response_format: "base64",
-    });
+  const response = await together.images.create({
+  prompt: `A professional food photography shot of ${item.name}, ultra realistic, high-end restaurant presentation, studio lighting, highly detailed, professional food styling, garnished, on a elegant plate, dramatic lighting, shallow depth of field, commercial photography quality. ${item.description}`,
+  model: "black-forest-labs/FLUX.1-dev", // Using the dev model for potentially better quality
+  width: 1024,
+  height: 768,
+  steps: 5,
+  // @ts-expect-error - this is not typed in the API
+  response_format: "base64",
+});
+
     item.menuImage = response.data[0];
     return item;
   });
