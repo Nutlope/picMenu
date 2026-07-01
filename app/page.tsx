@@ -68,7 +68,7 @@ export default function Home() {
         <p className="mx-auto mb-5 w-fit rounded-2xl border px-4 py-1 text-sm text-slate-500">
           100% free and powered by{" "}
           <a
-            href="https://togetherai.link/"
+            href="https://togetherai.link/?utm_source=picMenu&utm_medium=referral&utm_campaign=example-app"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-blue-500 transition font-bold"

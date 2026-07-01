@@ -9,9 +9,9 @@
 
 ## Tech stack
 
-- [Llama 3.2 Vision 90B](https://togetherai.link/) on Together AI to extract menu items from an image
-- [Llama 3.1 8B](https://togetherai.link/) on Together AI for structured outputs (JSON mode)
-- [Flux Schnell](https://togetherai.link/) on Together AI for image generation
+- [Llama 3.2 Vision 90B](https://togetherai.link/?utm_source=picMenu&utm_medium=referral&utm_campaign=example-app) on Together AI to extract menu items from an image
+- [Llama 3.1 8B](https://togetherai.link/?utm_source=picMenu&utm_medium=referral&utm_campaign=example-app) on Together AI for structured outputs (JSON mode)
+- [Flux Schnell](https://togetherai.link/?utm_source=picMenu&utm_medium=referral&utm_campaign=example-app) on Together AI for image generation
 - [Next.js](https://nextjs.org/) with TypeScript for the app framework
 - [Shadcn](https://ui.shadcn.com/) for UI components & [Tailwind](https://tailwindcss.com/) for styling
 - [Plausible](https://plausible.io/) & [Helicone](https://helicone.ai/) for analytics & observability
