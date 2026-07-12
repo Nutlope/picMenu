@@ -9,7 +9,7 @@ export function Footer() {
             <p className="text-gray-500">
               Powered by{" "}
               <a
-                href="https://togetherai.link/"
+                href="https://togetherai.link/?utm_source=picMenu&utm_medium=referral&utm_campaign=example-app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-500 hover:text-gray-900 transition-colors  underline-offset-4 underline"
